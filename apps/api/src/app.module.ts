@@ -9,6 +9,7 @@ import { AgentsModule } from './modules/agents/agents.module';
 import { ConversationsModule } from './modules/conversations/conversations.module';
 import { WorkflowsModule } from './modules/workflows/workflows.module';
 import { ConnectorsModule } from './modules/connectors/connectors.module';
+import { WebhooksModule } from './modules/webhooks/webhooks.module';
 import { BillingModule } from './modules/billing/billing.module';
 import { AdminModule } from './modules/admin/admin.module';
 
@@ -24,6 +25,7 @@ import { AdminModule } from './modules/admin/admin.module';
     ConversationsModule,
     WorkflowsModule,
     ConnectorsModule,
+    WebhooksModule,
     BillingModule,
     AdminModule,
   ],

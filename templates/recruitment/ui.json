@@ -1,0 +1,22 @@
+{
+  "terminology": {
+    "Contact": "Candidate",
+    "Deal": "Placement",
+    "Pipeline": "Hiring Pipeline"
+  },
+  "nav": [
+    { "key": "dashboard", "label": "Dashboard" },
+    { "key": "crm", "label": "Candidates" },
+    { "key": "inbox", "label": "Inbox" },
+    { "key": "documents", "label": "Resumes" },
+    { "key": "knowledge", "label": "Roles & JDs" },
+    { "key": "workflows", "label": "Automations" },
+    { "key": "agents", "label": "AI Agents" }
+  ],
+  "dashboardWidgets": [
+    "pipeline_summary",
+    "interviews_today",
+    "new_candidates_by_source",
+    "tasks_due"
+  ]
+}

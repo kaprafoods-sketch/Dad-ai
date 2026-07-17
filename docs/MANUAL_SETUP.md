@@ -110,21 +110,40 @@ Legend: 🔑 = create an account / get a key · ⚙️ = run a command · 🖱�
 
 ---
 
-## 7. Deployment (unblocks going live)
+## 7. Deployment — THE LAST STEP (everything else is code, already done)
 
-- 🖱️ **Vercel**: import the repo, create two projects (`apps/customer`,
-  `apps/admin`), set root directories and env vars. Admin app: add IP allowlist
-  or admin SSO.
-- 🖱️ **Railway/Fly**: deploy `apps/api` and `apps/worker` as two services with
-  the same env. API build: `pnpm --filter @dad-ai/api build`.
-- 🔑 `ADMIN_API_KEY`: set a strong secret; the admin endpoints and tenant
-  provisioning require it via the `x-admin-key` header.
-- 🖱️ Point DNS: `{tenant}.dadai.app` wildcard → customer app; `admin.dadai.app`
-  → admin app.
-- 🖱️ **Sentry** 🔑 + a log drain (Axiom/Betterstack) for monitoring.
-- The GitHub Actions CI (`.github/workflows/ci.yml`) already runs
-  install → generate → validate → lint → typecheck → test → build on every PR.
-  Add deploy steps + secrets when you're ready to auto-deploy.
+Deploy artifacts are committed, so this is mostly clicking + pasting secrets.
+
+**Backend (API + worker) → Render** (Dockerfiles + `render.yaml` are ready):
+
+1. 🖱️ Render → **New → Blueprint** → point at this repo. It reads `render.yaml`
+   and creates two services: `dad-ai-api` (web) and `dad-ai-worker` (background).
+2. 🔑 Fill the `sync: false` env vars in the Render dashboard (the keys you
+   gathered in sections 1–6). Set `CORS_ORIGINS` and `CUSTOMER_APP_URL` to your
+   Vercel domains, and `ADMIN_API_KEY` to a strong secret.
+3. The API health check (`/v1/health`) gates the deploy automatically.
+   (Fly.io/Railway work too — same Dockerfiles, `docker build -f apps/api/Dockerfile .`)
+
+**Frontend (customer + admin) → Vercel** (`vercel.json` in each app is ready):
+
+4. 🖱️ Vercel → import the repo **twice**, once per app. Set the project **Root
+   Directory** to `apps/customer` and `apps/admin` respectively; `vercel.json`
+   handles the monorepo build/install commands.
+5. 🔑 Set `NEXT_PUBLIC_API_URL` (→ your Render API URL) on both. For `admin`,
+   add an IP allowlist or admin SSO (Vercel project protection).
+6. 🖱️ DNS: `{tenant}.dadai.app` wildcard → customer app; `admin.dadai.app` →
+   admin app; point the API at `api.dadai.app`.
+
+**Finally:**
+
+7. 🖱️ Update the redirect/webhook URLs you registered in sections 1, 4, 5 to the
+   real deployed URLs (Supabase auth redirect, WhatsApp webhook, Razorpay
+   webhook, Google OAuth redirect).
+8. 🖱️ **Sentry** 🔑 + a log drain (Axiom/Betterstack) for monitoring.
+
+CI (`.github/workflows/ci.yml`) already runs
+install → generate → validate → lint → typecheck → test → build on every PR;
+Render/Vercel auto-deploy on push to `main`.
 
 ---
 

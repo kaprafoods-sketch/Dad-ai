@@ -9,9 +9,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@dad-ai/connectors": "workspace:*",
     "@dad-ai/db": "workspace:*",
+    "@dad-ai/notify": "workspace:*",
     "@dad-ai/rag": "workspace:*",
+    "@dad-ai/receptionist": "workspace:*",
     "@dad-ai/shared": "workspace:*",
+    "@dad-ai/workflow": "workspace:*",
     "bullmq": "^5.44.0"
   },
   "devDependencies": {

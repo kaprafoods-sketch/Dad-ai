@@ -1,0 +1,17 @@
+{
+  "terminology": {
+    "Contact": "Client",
+    "Deal": "Engagement",
+    "Pipeline": "Compliance Pipeline"
+  },
+  "nav": [
+    { "key": "dashboard", "label": "Dashboard" },
+    { "key": "crm", "label": "Clients" },
+    { "key": "inbox", "label": "Inbox" },
+    { "key": "documents", "label": "Documents" },
+    { "key": "knowledge", "label": "Services & FAQs" },
+    { "key": "workflows", "label": "Automations" },
+    { "key": "agents", "label": "AI Agents" }
+  ],
+  "dashboardWidgets": ["pipeline_summary", "filings_due", "new_clients_by_source", "tasks_due"]
+}

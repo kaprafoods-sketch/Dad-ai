@@ -1,0 +1,37 @@
+{
+  "contactTypes": [
+    {
+      "type": "client",
+      "label": "Client",
+      "customFields": [
+        {
+          "key": "entityType",
+          "label": "Entity Type",
+          "type": "select",
+          "required": false,
+          "options": ["individual", "proprietorship", "partnership", "llp", "pvt_ltd", "public_ltd"]
+        },
+        { "key": "gstin", "label": "GSTIN", "type": "text", "required": false },
+        { "key": "pan", "label": "PAN", "type": "text", "required": false },
+        {
+          "key": "source",
+          "label": "Source",
+          "type": "select",
+          "required": false,
+          "options": ["referral", "website", "walk_in", "existing_client"]
+        }
+      ]
+    }
+  ],
+  "dealCustomFields": [
+    {
+      "key": "service",
+      "label": "Service",
+      "type": "select",
+      "required": false,
+      "options": ["gst_filing", "itr", "audit", "roc", "bookkeeping", "advisory"]
+    },
+    { "key": "dueDate", "label": "Due Date", "type": "date", "required": false },
+    { "key": "fee", "label": "Fee", "type": "currency", "required": false }
+  ]
+}

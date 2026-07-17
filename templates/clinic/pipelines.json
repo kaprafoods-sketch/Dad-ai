@@ -1,0 +1,8 @@
+{
+  "pipelines": [
+    {
+      "name": "Patient Journey",
+      "stages": ["Enquiry", "Appointment Booked", "Consulted", "Treatment", "Follow-up"]
+    }
+  ]
+}

@@ -15,6 +15,7 @@
     "@dad-ai/shared": "workspace:*"
   },
   "devDependencies": {
+    "@types/node": "^22.20.1",
     "typescript": "^5.8.0"
   }
 }

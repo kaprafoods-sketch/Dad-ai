@@ -75,6 +75,9 @@ importers:
       '@dad-ai/billing':
         specifier: workspace:*
         version: link:../../packages/billing
+      '@dad-ai/connectors':
+        specifier: workspace:*
+        version: link:../../packages/connectors
       '@dad-ai/db':
         specifier: workspace:*
         version: link:../../packages/db
@@ -84,6 +87,9 @@ importers:
       '@dad-ai/rag':
         specifier: workspace:*
         version: link:../../packages/rag
+      '@dad-ai/receptionist':
+        specifier: workspace:*
+        version: link:../../packages/receptionist
       '@dad-ai/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -173,15 +179,27 @@ importers:
 
   apps/worker:
     dependencies:
+      '@dad-ai/connectors':
+        specifier: workspace:*
+        version: link:../../packages/connectors
       '@dad-ai/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@dad-ai/notify':
+        specifier: workspace:*
+        version: link:../../packages/notify
       '@dad-ai/rag':
         specifier: workspace:*
         version: link:../../packages/rag
+      '@dad-ai/receptionist':
+        specifier: workspace:*
+        version: link:../../packages/receptionist
       '@dad-ai/shared':
         specifier: workspace:*
         version: link:../../packages/shared
+      '@dad-ai/workflow':
+        specifier: workspace:*
+        version: link:../../packages/workflow
       bullmq:
         specifier: ^5.44.0
         version: 5.80.6
@@ -263,6 +281,9 @@ importers:
         specifier: workspace:*
         version: link:../shared
     devDependencies:
+      '@types/node':
+        specifier: ^22.20.1
+        version: 22.20.1
       typescript:
         specifier: ^5.8.0
         version: 5.9.3
@@ -292,6 +313,19 @@ importers:
       '@swc/core':
         specifier: ^1.15.43
         version: 1.15.43
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.20.1
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+
+  packages/notify:
+    dependencies:
+      '@dad-ai/connectors':
+        specifier: workspace:*
+        version: link:../connectors
+    devDependencies:
       '@types/node':
         specifier: ^22.0.0
         version: 22.20.1
@@ -331,6 +365,25 @@ importers:
         specifier: ^5.8.0
         version: 5.9.3
 
+  packages/receptionist:
+    dependencies:
+      '@dad-ai/ai':
+        specifier: workspace:*
+        version: link:../ai
+      '@dad-ai/db':
+        specifier: workspace:*
+        version: link:../db
+      '@dad-ai/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.20.1
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+
   packages/shared:
     dependencies:
       zod:
@@ -363,6 +416,9 @@ importers:
         specifier: workspace:*
         version: link:../shared
     devDependencies:
+      '@types/node':
+        specifier: ^22.20.1
+        version: 22.20.1
       typescript:
         specifier: ^5.8.0
         version: 5.9.3

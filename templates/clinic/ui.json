@@ -1,0 +1,22 @@
+{
+  "terminology": {
+    "Contact": "Patient",
+    "Deal": "Case",
+    "Pipeline": "Patient Journey"
+  },
+  "nav": [
+    { "key": "dashboard", "label": "Dashboard" },
+    { "key": "crm", "label": "Patients" },
+    { "key": "inbox", "label": "Inbox" },
+    { "key": "documents", "label": "Records" },
+    { "key": "knowledge", "label": "Treatments & FAQs" },
+    { "key": "workflows", "label": "Automations" },
+    { "key": "agents", "label": "AI Agents" }
+  ],
+  "dashboardWidgets": [
+    "pipeline_summary",
+    "appointments_today",
+    "new_patients_by_source",
+    "tasks_due"
+  ]
+}

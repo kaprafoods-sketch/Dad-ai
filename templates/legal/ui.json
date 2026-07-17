@@ -1,0 +1,22 @@
+{
+  "terminology": {
+    "Contact": "Client",
+    "Deal": "Matter",
+    "Pipeline": "Matters"
+  },
+  "nav": [
+    { "key": "dashboard", "label": "Dashboard" },
+    { "key": "crm", "label": "Clients" },
+    { "key": "inbox", "label": "Inbox" },
+    { "key": "documents", "label": "Case Files" },
+    { "key": "knowledge", "label": "Practice Areas & FAQs" },
+    { "key": "workflows", "label": "Automations" },
+    { "key": "agents", "label": "AI Agents" }
+  ],
+  "dashboardWidgets": [
+    "pipeline_summary",
+    "hearings_this_week",
+    "new_clients_by_source",
+    "tasks_due"
+  ]
+}

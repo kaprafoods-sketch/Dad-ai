@@ -63,3 +63,21 @@ export class ConnectorRegistry {
 
 // Build order (docs/architecture.md §8): whatsapp → google → razorpay →
 // resend/twilio → vertical-specific (99acres, naukri, …) per pack launch.
+
+export { encryptCredentials, decryptCredentials } from './crypto';
+export {
+  verifyWhatsAppSubscription,
+  verifyWhatsAppSignature,
+  parseWhatsAppInbound,
+  sendWhatsAppText,
+  type InboundWhatsAppMessage,
+  type WhatsAppSendConfig,
+} from './whatsapp';
+export {
+  googleAuthUrl,
+  exchangeGoogleCode,
+  refreshGoogleToken,
+  GOOGLE_SCOPES,
+  type GoogleOAuthConfig,
+  type GoogleTokens,
+} from './google';

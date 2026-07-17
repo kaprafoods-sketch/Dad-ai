@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { ConnectorsController } from './connectors.controller';
 
-// TODO(roadmap): OAuth callbacks, /v1/webhooks/:provider ingress, sync status
-@Module({})
+@Module({
+  controllers: [ConnectorsController],
+})
 export class ConnectorsModule {}

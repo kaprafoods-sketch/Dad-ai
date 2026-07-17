@@ -33,7 +33,13 @@ describe('loadPack', () => {
     ]);
   });
 
-  it('throws for a pack with no bundle', () => {
-    expect(() => loadPack(TEMPLATES_ROOT, 'CLINIC')).toThrow(/no template bundle/);
+  it('loads and validates every shipped pack', () => {
+    for (const pack of ['AGENCY', 'REAL_ESTATE', 'RECRUITMENT', 'CLINIC', 'CA', 'LEGAL'] as const) {
+      const bundle = loadPack(TEMPLATES_ROOT, pack);
+      expect(bundle.meta.id).toBeTruthy();
+      expect(bundle.pipelines.pipelines.length).toBeGreaterThan(0);
+      expect(bundle.prompts.receptionist).toBeTruthy();
+      expect(Object.keys(bundle.ui.terminology).length).toBeGreaterThan(0);
+    }
   });
 });

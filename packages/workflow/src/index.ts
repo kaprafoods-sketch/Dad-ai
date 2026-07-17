@@ -26,4 +26,4 @@ export interface ServiceTokenIssuer {
   verify(token: string): Promise<{ tenantId: string; scopes: string[] }>;
 }
 
-// TODO(phase-2): N8nBridge implementation via the n8n REST API.
+export { N8nBridge, n8nFromEnv } from './n8n';

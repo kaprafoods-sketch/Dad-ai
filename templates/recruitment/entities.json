@@ -1,0 +1,43 @@
+{
+  "contactTypes": [
+    {
+      "type": "candidate",
+      "label": "Candidate",
+      "customFields": [
+        { "key": "currentRole", "label": "Current Role", "type": "text", "required": false },
+        {
+          "key": "experienceYears",
+          "label": "Experience (years)",
+          "type": "number",
+          "required": false
+        },
+        { "key": "currentCtc", "label": "Current CTC", "type": "currency", "required": false },
+        { "key": "expectedCtc", "label": "Expected CTC", "type": "currency", "required": false },
+        {
+          "key": "noticePeriodDays",
+          "label": "Notice Period (days)",
+          "type": "number",
+          "required": false
+        },
+        {
+          "key": "source",
+          "label": "Source",
+          "type": "select",
+          "required": false,
+          "options": ["naukri", "linkedin", "indeed", "referral", "website", "walk_in"]
+        }
+      ]
+    },
+    {
+      "type": "client",
+      "label": "Client",
+      "customFields": [{ "key": "company", "label": "Company", "type": "text", "required": true }]
+    }
+  ],
+  "dealCustomFields": [
+    { "key": "role", "label": "Role", "type": "text", "required": false },
+    { "key": "client", "label": "Client", "type": "text", "required": false },
+    { "key": "interviewAt", "label": "Interview Date", "type": "date", "required": false },
+    { "key": "offeredCtc", "label": "Offered CTC", "type": "currency", "required": false }
+  ]
+}

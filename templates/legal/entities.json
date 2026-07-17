@@ -1,0 +1,30 @@
+{
+  "contactTypes": [
+    {
+      "type": "client",
+      "label": "Client",
+      "customFields": [
+        {
+          "key": "matterType",
+          "label": "Matter Type",
+          "type": "select",
+          "required": false,
+          "options": ["civil", "criminal", "corporate", "family", "property", "ip", "labour"]
+        },
+        {
+          "key": "source",
+          "label": "Source",
+          "type": "select",
+          "required": false,
+          "options": ["referral", "website", "walk_in", "existing_client"]
+        }
+      ]
+    }
+  ],
+  "dealCustomFields": [
+    { "key": "matterTitle", "label": "Matter", "type": "text", "required": false },
+    { "key": "court", "label": "Court / Forum", "type": "text", "required": false },
+    { "key": "nextHearingAt", "label": "Next Hearing", "type": "date", "required": false },
+    { "key": "retainer", "label": "Retainer", "type": "currency", "required": false }
+  ]
+}

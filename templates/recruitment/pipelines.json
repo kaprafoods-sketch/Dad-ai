@@ -1,0 +1,8 @@
+{
+  "pipelines": [
+    {
+      "name": "Hiring",
+      "stages": ["Sourced", "Screened", "Interview", "Offer", "Joined"]
+    }
+  ]
+}

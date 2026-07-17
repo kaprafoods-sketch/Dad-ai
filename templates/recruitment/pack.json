@@ -1,0 +1,7 @@
+{
+  "id": "recruitment",
+  "name": "Recruitment",
+  "version": "0.1.0",
+  "description": "Industry pack for recruitment agencies and in-house talent teams: candidate sourcing, screening, interview scheduling, offer-to-join pipeline.",
+  "minPlan": "STARTER"
+}

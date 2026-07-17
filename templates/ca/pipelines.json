@@ -1,0 +1,8 @@
+{
+  "pipelines": [
+    {
+      "name": "Compliance",
+      "stages": ["Enquiry", "Onboarded", "Docs Collected", "In Progress", "Filed"]
+    }
+  ]
+}

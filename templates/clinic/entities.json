@@ -1,0 +1,31 @@
+{
+  "contactTypes": [
+    {
+      "type": "patient",
+      "label": "Patient",
+      "customFields": [
+        { "key": "age", "label": "Age", "type": "number", "required": false },
+        {
+          "key": "gender",
+          "label": "Gender",
+          "type": "select",
+          "required": false,
+          "options": ["male", "female", "other", "prefer_not_to_say"]
+        },
+        { "key": "primaryConcern", "label": "Primary Concern", "type": "text", "required": false },
+        {
+          "key": "source",
+          "label": "Source",
+          "type": "select",
+          "required": false,
+          "options": ["walk_in", "referral", "website", "google", "practo"]
+        }
+      ]
+    }
+  ],
+  "dealCustomFields": [
+    { "key": "treatment", "label": "Treatment", "type": "text", "required": false },
+    { "key": "appointmentAt", "label": "Appointment", "type": "date", "required": false },
+    { "key": "estimatedCost", "label": "Estimated Cost", "type": "currency", "required": false }
+  ]
+}

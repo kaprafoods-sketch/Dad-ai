@@ -1,0 +1,7 @@
+{
+  "id": "clinic",
+  "name": "Clinic",
+  "version": "0.1.0",
+  "description": "Industry pack for clinics and healthcare practices: patient intake, appointment scheduling, treatment pipeline. Handles health data — encrypted storage and short-TTL signed URLs are mandatory.",
+  "minPlan": "PRO"
+}

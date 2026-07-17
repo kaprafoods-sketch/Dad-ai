@@ -1,0 +1,7 @@
+{
+  "id": "ca",
+  "name": "CA Firm",
+  "version": "0.1.0",
+  "description": "Industry pack for chartered accountant firms: client onboarding, compliance/filing pipeline, document collection (GST, ITR, ROC). Handles financial data — encrypted storage mandatory.",
+  "minPlan": "PRO"
+}

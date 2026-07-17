@@ -1,0 +1,8 @@
+{
+  "pipelines": [
+    {
+      "name": "Matters",
+      "stages": ["Enquiry", "Consultation", "Engaged", "In Progress", "Closed"]
+    }
+  ]
+}

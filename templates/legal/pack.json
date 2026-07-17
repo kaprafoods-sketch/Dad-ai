@@ -1,0 +1,7 @@
+{
+  "id": "legal",
+  "name": "Legal Firm",
+  "version": "0.1.0",
+  "description": "Industry pack for law firms and legal practices: client intake, matter management, hearing/deadline tracking. Handles privileged data — encrypted storage mandatory.",
+  "minPlan": "PRO"
+}
