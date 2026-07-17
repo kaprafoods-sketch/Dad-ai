@@ -1,0 +1,324 @@
+// Dad AI — single shared schema, row-level multi-tenancy.
+// Every business table carries tenantId and MUST have an RLS policy
+// (tenant_id = auth.jwt() ->> 'tenant_id') added in migrations.
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [vector]
+}
+
+// ---------- Enums ----------
+
+enum IndustryPack {
+  AGENCY
+  REAL_ESTATE
+  RECRUITMENT
+  CLINIC
+  CA
+  LEGAL
+}
+
+enum Plan {
+  TRIAL
+  STARTER
+  PRO
+  BUSINESS
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  MEMBER
+  AGENT
+}
+
+enum DealStatus {
+  OPEN
+  WON
+  LOST
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+  CANCELLED
+}
+
+enum DocStatus {
+  UPLOADED
+  PROCESSING
+  READY
+  FAILED
+}
+
+// ---------- Platform ----------
+
+model Tenant {
+  id           String        @id @default(uuid())
+  name         String
+  slug         String        @unique // subdomain: {slug}.dadai.app
+  industryPack IndustryPack
+  plan         Plan          @default(TRIAL)
+  settings     Json          @default("{}") // pack ui.json, custom field schemas, branding
+  createdAt    DateTime      @default(now())
+  users        User[]
+  subscription Subscription?
+}
+
+model User {
+  id        String   @id @default(uuid()) // mirrors Supabase auth.users id
+  tenantId  String
+  email     String
+  role      Role
+  createdAt DateTime @default(now())
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+
+  @@unique([tenantId, email])
+  @@index([tenantId])
+}
+
+// ---------- Universal CRM ----------
+
+model Contact {
+  id           String     @id @default(uuid())
+  tenantId     String
+  type         String // customer | lead | candidate | patient | client (pack-driven)
+  name         String
+  phone        String?
+  email        String?
+  customFields Json       @default("{}") // validated against pack zod schema
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  deals        Deal[]
+  activities   Activity[]
+
+  @@index([tenantId, type])
+  @@index([tenantId, phone])
+  @@index([tenantId, email])
+}
+
+model Pipeline {
+  id        String   @id @default(uuid())
+  tenantId  String
+  name      String
+  createdAt DateTime @default(now())
+  stages    Stage[]
+  deals     Deal[]
+
+  @@index([tenantId])
+}
+
+model Stage {
+  id         String   @id @default(uuid())
+  tenantId   String
+  pipelineId String
+  name       String
+  order      Int
+  pipeline   Pipeline @relation(fields: [pipelineId], references: [id])
+  deals      Deal[]
+
+  @@index([tenantId, pipelineId, order])
+}
+
+model Deal {
+  id           String     @id @default(uuid())
+  tenantId     String
+  contactId    String
+  pipelineId   String
+  stageId      String
+  title        String
+  value        Decimal    @default(0)
+  status       DealStatus @default(OPEN)
+  customFields Json       @default("{}")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  contact      Contact    @relation(fields: [contactId], references: [id])
+  pipeline     Pipeline   @relation(fields: [pipelineId], references: [id])
+  stage        Stage      @relation(fields: [stageId], references: [id])
+  activities   Activity[]
+
+  @@index([tenantId, stageId])
+  @@index([tenantId, status])
+}
+
+// Unified timeline: every human AND AI action lands here (auditability).
+model Activity {
+  id        String   @id @default(uuid())
+  tenantId  String
+  contactId String?
+  dealId    String?
+  type      String // call | email | whatsapp | note | task | meeting | ai_action
+  payload   Json
+  actorType String // user | ai_agent | system
+  actorId   String?
+  createdAt DateTime @default(now())
+  contact   Contact? @relation(fields: [contactId], references: [id])
+  deal      Deal?    @relation(fields: [dealId], references: [id])
+
+  @@index([tenantId, contactId, createdAt])
+  @@index([tenantId, dealId, createdAt])
+}
+
+model Task {
+  id         String     @id @default(uuid())
+  tenantId   String
+  title      String
+  assigneeId String? // user OR agent id
+  dueAt      DateTime?
+  status     TaskStatus @default(TODO)
+  linkedTo   Json? // { entity: "deal", id: "..." }
+  createdAt  DateTime   @default(now())
+
+  @@index([tenantId, status, dueAt])
+}
+
+// ---------- Documents ----------
+
+model Document {
+  id          String          @id @default(uuid())
+  tenantId    String
+  storagePath String // Supabase Storage key (private bucket, signed URLs)
+  filename    String
+  mimeType    String
+  status      DocStatus       @default(UPLOADED)
+  extraction  Json? // OCR/structured extraction output (pack-specific schema)
+  summary     String?
+  createdAt   DateTime        @default(now())
+  chunks      DocumentChunk[]
+
+  @@index([tenantId, status])
+}
+
+model DocumentChunk {
+  id         String                 @id @default(uuid())
+  tenantId   String
+  documentId String
+  content    String
+  embedding  Unsupported("vector(1536)")?
+  metadata   Json                   @default("{}")
+  document   Document               @relation(fields: [documentId], references: [id])
+
+  @@index([tenantId])
+  @@index([documentId])
+}
+
+// ---------- AI ----------
+
+model Agent {
+  id           String   @id @default(uuid())
+  tenantId     String
+  type         String // receptionist | employee | doc_processor | custom
+  name         String
+  systemPrompt String
+  model        String // openrouter model slug
+  tools        Json     @default("[]") // enabled tool allowlist
+  channels     Json     @default("[]") // ["whatsapp","phone","email","chat"]
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  @@index([tenantId, type])
+}
+
+model Conversation {
+  id        String    @id @default(uuid())
+  tenantId  String
+  agentId   String?
+  contactId String?
+  channel   String // whatsapp | phone | email | webchat
+  status    String    @default("OPEN") // OPEN | NEEDS_HUMAN | CLOSED
+  createdAt DateTime  @default(now())
+  messages  Message[]
+
+  @@index([tenantId, contactId])
+  @@index([tenantId, status])
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  conversationId String
+  role           String // user | assistant | tool | system
+  content        String
+  toolCalls      Json?
+  tokensIn       Int          @default(0)
+  tokensOut      Int          @default(0)
+  costUsd        Decimal      @default(0)
+  createdAt      DateTime     @default(now())
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+
+  @@index([conversationId, createdAt])
+}
+
+// Metering for billing + the admin AI-cost dashboard.
+model AiUsage {
+  id        String   @id @default(uuid())
+  tenantId  String
+  model     String
+  tokensIn  Int
+  tokensOut Int
+  costUsd   Decimal
+  feature   String // receptionist | rag | doc_ai | workflow
+  createdAt DateTime @default(now())
+
+  @@index([tenantId, createdAt])
+}
+
+// ---------- Connectors & Workflows ----------
+
+model ConnectorInstall {
+  id          String    @id @default(uuid())
+  tenantId    String
+  provider    String // google | whatsapp | naukri | ...
+  credentials Json // AES-256-GCM encrypted at rest — never plaintext
+  status      String // ACTIVE | ERROR | REVOKED
+  lastSyncAt  DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@unique([tenantId, provider])
+}
+
+model Workflow {
+  id         String        @id @default(uuid())
+  tenantId   String
+  name       String
+  trigger    Json // { type: "webhook" | "schedule" | "event", ... }
+  definition Json // n8n workflow export OR internal DSL
+  active     Boolean       @default(true)
+  createdAt  DateTime      @default(now())
+  runs       WorkflowRun[]
+
+  @@index([tenantId])
+}
+
+model WorkflowRun {
+  id         String   @id @default(uuid())
+  tenantId   String
+  workflowId String
+  status     String // RUNNING | SUCCESS | FAILED
+  logs       Json     @default("[]")
+  startedAt  DateTime @default(now())
+  finishedAt DateTime?
+  workflow   Workflow @relation(fields: [workflowId], references: [id])
+
+  @@index([tenantId, workflowId, startedAt])
+}
+
+// ---------- Billing ----------
+
+model Subscription {
+  id         String   @id @default(uuid())
+  tenantId   String   @unique
+  plan       Plan
+  provider   String // razorpay | stripe
+  providerId String
+  status     String // active | past_due | cancelled
+  periodEnd  DateTime
+  tenant     Tenant   @relation(fields: [tenantId], references: [id])
+}

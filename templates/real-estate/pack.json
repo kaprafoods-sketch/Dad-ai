@@ -1,0 +1,7 @@
+{
+  "id": "real-estate",
+  "name": "Real Estate",
+  "version": "0.1.0",
+  "description": "Industry pack for real estate brokers and builders: lead capture from portals, site-visit scheduling, booking-to-payment pipeline.",
+  "minPlan": "STARTER"
+}

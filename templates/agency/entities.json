@@ -1,0 +1,44 @@
+{
+  "contactTypes": [
+    {
+      "type": "lead",
+      "label": "Lead",
+      "customFields": [
+        { "key": "company", "label": "Company", "type": "text", "required": true },
+        {
+          "key": "source",
+          "label": "Lead Source",
+          "type": "select",
+          "required": false,
+          "options": ["referral", "inbound", "outbound", "event", "social"]
+        }
+      ]
+    },
+    {
+      "type": "client",
+      "label": "Client",
+      "customFields": [
+        { "key": "company", "label": "Company", "type": "text", "required": true },
+        { "key": "website", "label": "Website", "type": "text", "required": false }
+      ]
+    }
+  ],
+  "dealCustomFields": [
+    {
+      "key": "industryPack",
+      "label": "Industry Pack",
+      "type": "select",
+      "required": true,
+      "options": ["REAL_ESTATE", "RECRUITMENT", "CLINIC", "CA", "LEGAL"]
+    },
+    { "key": "tenantId", "label": "Provisioned Tenant ID", "type": "text", "required": false },
+    { "key": "mrr", "label": "MRR", "type": "currency", "required": false },
+    {
+      "key": "onboardingStatus",
+      "label": "Onboarding Status",
+      "type": "select",
+      "required": false,
+      "options": ["not_started", "kickoff_done", "data_imported", "agents_configured", "live"]
+    }
+  ]
+}

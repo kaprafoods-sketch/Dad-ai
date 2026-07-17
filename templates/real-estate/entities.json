@@ -1,0 +1,50 @@
+{
+  "contactTypes": [
+    {
+      "type": "lead",
+      "label": "Lead",
+      "customFields": [
+        {
+          "key": "budgetMin",
+          "label": "Budget (min)",
+          "type": "currency",
+          "required": false
+        },
+        { "key": "budgetMax", "label": "Budget (max)", "type": "currency", "required": false },
+        {
+          "key": "propertyType",
+          "label": "Property Type",
+          "type": "select",
+          "required": false,
+          "options": ["apartment", "villa", "plot", "commercial", "rental"]
+        },
+        {
+          "key": "preferredLocation",
+          "label": "Preferred Location",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "source",
+          "label": "Lead Source",
+          "type": "select",
+          "required": false,
+          "options": ["99acres", "magicbricks", "housing", "walk_in", "referral", "website"]
+        }
+      ]
+    },
+    {
+      "type": "customer",
+      "label": "Buyer",
+      "customFields": [
+        { "key": "bookedUnit", "label": "Booked Unit", "type": "text", "required": false }
+      ]
+    }
+  ],
+  "dealCustomFields": [
+    { "key": "project", "label": "Project", "type": "text", "required": false },
+    { "key": "unit", "label": "Unit", "type": "text", "required": false },
+    { "key": "siteVisitAt", "label": "Site Visit Date", "type": "date", "required": false },
+    { "key": "agreementSigned", "label": "Agreement Signed", "type": "boolean", "required": false }
+  ]
+}

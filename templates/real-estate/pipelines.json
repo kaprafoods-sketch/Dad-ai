@@ -1,0 +1,8 @@
+{
+  "pipelines": [
+    {
+      "name": "Sales",
+      "stages": ["Lead", "Site Visit", "Booking", "Agreement", "Payment"]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "id": "agency",
+  "name": "Agency",
+  "version": "0.1.0",
+  "description": "Internal pack for tenant #0 — the Dad AI agency's own client CRM. See docs/agency-crm.md.",
+  "minPlan": "TRIAL"
+}

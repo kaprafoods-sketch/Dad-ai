@@ -1,0 +1,17 @@
+{
+  "terminology": {
+    "Contact": "Client",
+    "Deal": "Opportunity",
+    "Pipeline": "Sales Pipeline"
+  },
+  "nav": [
+    { "key": "dashboard", "label": "Dashboard" },
+    { "key": "crm", "label": "Clients" },
+    { "key": "inbox", "label": "Inbox" },
+    { "key": "documents", "label": "Contracts & Docs" },
+    { "key": "knowledge", "label": "Knowledge Base" },
+    { "key": "workflows", "label": "Automations" },
+    { "key": "agents", "label": "AI Agents" }
+  ],
+  "dashboardWidgets": ["pipeline_summary", "mrr_total", "tasks_due", "recent_activity"]
+}
