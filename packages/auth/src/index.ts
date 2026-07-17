@@ -32,4 +32,4 @@ export function contextFromClaims(claims: DadAiJwtClaims): TenantContext {
   return { tenantId: claims.tenant_id, userId: claims.sub, role: claims.role };
 }
 
-// TODO(phase-0): Supabase JWT verification helper (jwks), NestJS guards in apps/api.
+export { verifySupabaseJwt } from './jwt';

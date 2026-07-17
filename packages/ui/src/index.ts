@@ -1,2 +1,2 @@
-export { cn } from './cn.js';
-export { Button } from './button.js';
+export { cn } from './cn';
+export { Button } from './button';

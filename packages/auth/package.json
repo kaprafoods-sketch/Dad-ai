@@ -12,9 +12,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@dad-ai/shared": "workspace:*"
+    "@dad-ai/shared": "workspace:*",
+    "jose": "^5.10.0"
   },
   "devDependencies": {
+    "@types/node": "^22.20.1",
     "typescript": "^5.8.0"
   }
 }

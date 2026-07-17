@@ -2,6 +2,18 @@
 
 Phased developer sequence with acceptance criteria. Each phase gates the next.
 
+## Current status (code in this repo)
+
+The scaffold in this repo already implements the **code** for Phases 0–3 —
+tenancy, CRM, document pipeline, AI receptionist, billing webhooks, admin
+endpoints, and two industry packs — all typechecked, unit-tested, and building
+green. What remains is **connecting live infrastructure** (Supabase, Redis,
+OpenRouter, Razorpay, n8n) and the deploy wiring — tracked in
+[MANUAL_SETUP.md](MANUAL_SETUP.md) — plus the Phase 2 channel/webhook code
+(WhatsApp/email inbound, n8n bridge) and Phase 4 verticals.
+
+- ✅ Implemented in code · 🔌 needs infra you connect (MANUAL_SETUP.md) · 🚧 still to build
+
 ---
 
 ## Phase 0 — Foundation (weeks 1–2)

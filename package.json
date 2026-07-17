@@ -11,15 +11,18 @@
     "typecheck": "turbo run typecheck",
     "lint": "prettier --check .",
     "format": "prettier --write .",
+    "test": "vitest run",
     "db:validate": "prisma validate",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev"
   },
   "devDependencies": {
+    "@prisma/client": "^6.8.0",
     "prettier": "^3.5.0",
     "prisma": "^6.8.0",
     "turbo": "^2.5.0",
-    "typescript": "^5.8.0"
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.7"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

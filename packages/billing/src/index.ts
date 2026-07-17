@@ -48,5 +48,12 @@ export function planHasFeature(plan: Plan, feature: Feature): boolean {
   return PLAN_FEATURES[plan].includes(feature);
 }
 
-// TODO(phase-3): Razorpay Subscriptions provider (webhooks → Subscription row +
-// payment.received event). Stripe when going international.
+export {
+  verifyRazorpaySignature,
+  normalizeRazorpayEvent,
+  type RazorpayEventType,
+  type NormalizedBillingEvent,
+} from './razorpay';
+
+// TODO(phase-3): Razorpay checkout/subscription creation (outbound API).
+// TODO(later): Stripe when going international.

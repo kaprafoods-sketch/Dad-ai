@@ -21,3 +21,4 @@ coverage/
 # prisma
 prisma/*.db
 *.tsbuildinfo
+packages/db/generated/

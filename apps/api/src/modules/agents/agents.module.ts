@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { AgentsController } from './agents.controller';
 
-// TODO(roadmap): agent CRUD, tool allowlists, prompt/model config
-@Module({})
+@Module({
+  controllers: [AgentsController],
+})
 export class AgentsModule {}

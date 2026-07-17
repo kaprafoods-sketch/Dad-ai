@@ -1,31 +1,46 @@
-// Placeholder dashboard. Phase 0 replaces this with the authed, pack-driven
-// shell: terminology, nav, and widgets all render from the tenant's ui.json
-// (docs/industry-packs.md).
+'use client';
 
-const NAV = ['Dashboard', 'CRM', 'Inbox', 'Documents', 'Knowledge Base', 'Workflows', 'Agents'];
+import { useQuery } from '@tanstack/react-query';
+import { api, type Deal, type Contact } from '../../lib/api';
 
 export default function DashboardPage() {
+  const contacts = useQuery({
+    queryKey: ['contacts'],
+    queryFn: () => api<Contact[]>('/crm/contacts'),
+    retry: false,
+  });
+  const deals = useQuery({
+    queryKey: ['deals'],
+    queryFn: () => api<Deal[]>('/crm/deals'),
+    retry: false,
+  });
+
+  const openDeals = deals.data?.filter((d) => d.status === 'OPEN') ?? [];
+  const pipelineValue = openDeals.reduce((sum, d) => sum + Number(d.value), 0);
+
   return (
-    <div className="flex min-h-screen">
-      <aside className="w-56 border-r border-zinc-200 p-4">
-        <p className="mb-6 text-lg font-bold">Dad AI</p>
-        <nav className="flex flex-col gap-1">
-          {NAV.map((item) => (
-            <span
-              key={item}
-              className="cursor-default rounded px-3 py-2 text-sm text-zinc-600 hover:bg-zinc-100"
-            >
-              {item}
-            </span>
-          ))}
-        </nav>
-      </aside>
-      <main className="flex-1 p-8">
-        <h1 className="text-2xl font-semibold">Dashboard</h1>
-        <p className="mt-2 text-zinc-600">
-          Tenant provisioning, auth, and the pack-driven UI land in Phase 0–1. See docs/roadmap.md.
+    <div>
+      <h1 className="text-2xl font-semibold">Dashboard</h1>
+      {(contacts.error || deals.error) && (
+        <p className="mt-2 text-sm text-amber-600">
+          API not reachable yet. Start the API and set NEXT_PUBLIC_DEV_TENANT_ID. See
+          docs/MANUAL_SETUP.md.
         </p>
-      </main>
+      )}
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <Stat label="Contacts" value={contacts.data?.length ?? 0} />
+        <Stat label="Open deals" value={openDeals.length} />
+        <Stat label="Pipeline value" value={`₹${pipelineValue.toLocaleString('en-IN')}`} />
+      </div>
+    </div>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div className="rounded-lg border border-zinc-200 p-5">
+      <p className="text-sm text-zinc-500">{label}</p>
+      <p className="mt-1 text-3xl font-semibold">{value}</p>
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { BillingController } from './billing.controller';
 
-// TODO(roadmap): plans, Razorpay webhooks, feature gating, AI usage
-@Module({})
+@Module({
+  controllers: [BillingController],
+})
 export class BillingModule {}

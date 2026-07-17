@@ -1,5 +1,9 @@
 import { Module } from '@nestjs/common';
+import { TenantsController } from './tenants.controller';
+import { TenantsService } from './tenants.service';
 
-// TODO(roadmap): tenant provisioning + ApplyIndustryPack job dispatch
-@Module({})
+@Module({
+  controllers: [TenantsController],
+  providers: [TenantsService],
+})
 export class TenantsModule {}

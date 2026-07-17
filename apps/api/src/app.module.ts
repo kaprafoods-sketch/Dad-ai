@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { CoreModule } from './core/core.module';
 import { HealthController } from './health.controller';
 import { AuthModule } from './modules/auth/auth.module';
 import { TenantsModule } from './modules/tenants/tenants.module';
@@ -14,6 +15,7 @@ import { AdminModule } from './modules/admin/admin.module';
 // One module per domain (docs/architecture.md §9).
 @Module({
   imports: [
+    CoreModule,
     AuthModule,
     TenantsModule,
     CrmModule,

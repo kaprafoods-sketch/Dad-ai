@@ -1,5 +1,11 @@
 import { Module } from '@nestjs/common';
+import { CrmModule } from '../crm/crm.module';
+import { ConversationsController } from './conversations.controller';
+import { ConversationsService } from './conversations.service';
 
-// TODO(roadmap): unified inbox, channel webhooks, human handoff
-@Module({})
+@Module({
+  imports: [CrmModule],
+  controllers: [ConversationsController],
+  providers: [ConversationsService],
+})
 export class ConversationsModule {}

@@ -1,25 +1,21 @@
-import { Worker } from 'bullmq';
+import { Worker, type Processor } from 'bullmq';
 import { QUEUES, type QueueName } from '@dad-ai/shared';
+import { getPrisma } from '@dad-ai/db';
+import { processDocument } from './processors/document';
 
 // BullMQ consumers (docs/architecture.md §12). Each queue gets a processor;
-// repeated failures go to a dead-letter queue + Sentry alert.
-//
-// TODO(phase-1): real processors —
-//   doc.process      → Document AI pipeline (extract, summarize, chunk, embed)
-//   connector.sync   → per-provider sync with rate limiting + backoff
-//   agent.run        → agent runtime loop (LLM → tool → repeat)
-//   notify.send      → Resend / Twilio / WhatsApp / push
-//   workflow.trigger → forward platform events to n8n
-//   billing.meter    → nightly AiUsage aggregation
+// repeated failures go to a dead-letter queue + Sentry alert (Phase 1).
 
-function startWorker(queue: QueueName, redisUrl: string): Worker {
-  return new Worker(
-    queue,
-    async (job) => {
-      console.log(`[${queue}] received job ${job.id} (no processor implemented yet)`);
-    },
-    { connection: { url: redisUrl } },
-  );
+function buildProcessors(): Partial<Record<QueueName, Processor>> {
+  const prisma = getPrisma();
+  return {
+    [QUEUES.DOC_PROCESS]: async (job) =>
+      processDocument(prisma, job.data as { tenantId: string; documentId: string; text?: string }),
+    // TODO(phase-2): connector.sync (per-provider rate limiting + backoff),
+    // agent.run (channel webhooks → ConversationsService core),
+    // notify.send (Resend/Twilio/WhatsApp), workflow.trigger (n8n dispatch),
+    // billing.meter (nightly AiUsage aggregation).
+  };
 }
 
 function main() {
@@ -28,7 +24,19 @@ function main() {
     console.error('REDIS_URL is not set — worker cannot start. See .env.example.');
     process.exit(1);
   }
-  const workers = Object.values(QUEUES).map((q) => startWorker(q, redisUrl));
+
+  const processors = buildProcessors();
+  const workers = Object.values(QUEUES).map(
+    (queue) =>
+      new Worker(
+        queue,
+        processors[queue] ??
+          (async (job) => {
+            console.log(`[${queue}] job ${job.id}: no processor implemented yet`);
+          }),
+        { connection: { url: redisUrl } },
+      ),
+  );
   console.log(`Dad AI worker consuming ${workers.length} queues:`, Object.values(QUEUES));
 
   const shutdown = async () => {

@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { DocumentsController } from './documents.controller';
 
-// TODO(roadmap): upload -> storage -> doc.process queue; status + search
-@Module({})
+@Module({
+  controllers: [DocumentsController],
+})
 export class DocumentsModule {}

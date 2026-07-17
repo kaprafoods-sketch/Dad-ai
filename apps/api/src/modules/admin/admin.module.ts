@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { AdminController } from './admin.controller';
 
-// TODO(roadmap): internal-only endpoints for the admin panel
-@Module({})
+@Module({
+  controllers: [AdminController],
+})
 export class AdminModule {}

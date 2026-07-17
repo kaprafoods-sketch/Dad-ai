@@ -1,5 +1,10 @@
 import { Module } from '@nestjs/common';
+import { CrmController } from './crm.controller';
+import { CrmService } from './crm.service';
 
-// TODO(roadmap): contacts, pipelines, deals, tasks, activity timeline
-@Module({})
+@Module({
+  controllers: [CrmController],
+  providers: [CrmService],
+  exports: [CrmService],
+})
 export class CrmModule {}

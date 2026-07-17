@@ -52,5 +52,8 @@ export interface UsageMeter {
   checkBudget(tenantId: string): Promise<{ remainingUsd: number; softWarn: boolean }>;
 }
 
-// TODO(phase-1): implement OpenRouterModelRouter (fetch → openrouter.ai/api/v1),
-// InMemoryPromptRegistry loading from templates/{pack}/prompts, PrismaUsageMeter.
+export { OpenRouterModelRouter, type OpenRouterOptions } from './openrouter';
+export { InMemoryPromptRegistry } from './prompts';
+export { runAgent, type AgentTool, type AgentRunInput, type AgentRunResult } from './runtime';
+
+// TODO(phase-1): PrismaUsageMeter (AiUsage table) once migrations run.

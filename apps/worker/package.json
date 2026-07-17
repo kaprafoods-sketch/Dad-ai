@@ -3,16 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "tsx watch src/main.ts",
+    "dev": "node --watch -r @swc-node/register src/main.ts",
     "build": "tsc -p tsconfig.build.json",
-    "start": "node dist/main.js",
+    "start": "node -r @swc-node/register src/main.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@dad-ai/db": "workspace:*",
+    "@dad-ai/rag": "workspace:*",
     "@dad-ai/shared": "workspace:*",
     "bullmq": "^5.44.0"
   },
   "devDependencies": {
+    "@swc-node/register": "^1.12.0",
+    "@swc/core": "^1.15.43",
     "@types/node": "^22.0.0",
     "tsx": "^4.19.0",
     "typescript": "^5.8.0"

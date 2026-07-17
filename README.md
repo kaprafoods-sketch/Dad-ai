@@ -12,6 +12,7 @@ The agency itself runs as **tenant #0** on the platform, using the same universa
 | [docs/roadmap.md](docs/roadmap.md)               | Phased build roadmap with acceptance criteria                                                        |
 | [docs/agency-crm.md](docs/agency-crm.md)         | How the agency runs as tenant #0 to manage its own clients                                           |
 | [docs/industry-packs.md](docs/industry-packs.md) | The template system that makes each client's SaaS "custom"                                           |
+| [docs/MANUAL_SETUP.md](docs/MANUAL_SETUP.md)     | Human-only setup steps (Supabase, keys, deploys) to take the code live                               |
 
 ## Repository layout
 

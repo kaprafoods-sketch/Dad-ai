@@ -38,5 +38,8 @@ export interface Retriever {
   ): Promise<RetrievedChunk[]>;
 }
 
-// TODO(phase-1): TokenChunker, OpenRouterEmbedder, PgVectorRetriever.
+export { TokenChunker } from './chunker';
+export { OpenAiCompatibleEmbedder } from './embedder';
+export { PgVectorRetriever, type RawQueryClient } from './retriever';
+
 // TODO(later): hybrid search — Postgres FTS + reciprocal rank fusion.

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PLANS } from '../enums.js';
+import { PLANS } from '../enums';
 
 // Schema for templates/{pack}/ bundle files. See docs/industry-packs.md.
 

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { DEAL_STATUSES, TASK_STATUSES, ACTOR_TYPES } from '../enums.js';
+import { DEAL_STATUSES, TASK_STATUSES, ACTOR_TYPES } from '../enums';
 
 export const contactSchema = z.object({
   id: z.string().uuid(),

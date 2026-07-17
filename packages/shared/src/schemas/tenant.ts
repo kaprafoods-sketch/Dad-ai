@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { INDUSTRY_PACKS, PLANS, ROLES } from '../enums.js';
+import { INDUSTRY_PACKS, PLANS, ROLES } from '../enums';
 
 export const tenantSchema = z.object({
   id: z.string().uuid(),
