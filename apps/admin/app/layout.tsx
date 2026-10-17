@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Dad AI — Admin',
+  title: 'Nirmaanco — Admin',
   description: 'Internal admin panel: tenants, subscriptions, AI costs, system health',
 };
 

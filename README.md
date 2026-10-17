@@ -1,4 +1,4 @@
-# Dad AI
+# Nirmaanco
 
 **A multi-tenant AI Business Operating System.** One codebase that delivers "custom SaaS" to each client as a configured tenant — CRM + AI Receptionist + AI Employee + Document AI + Knowledge Base (RAG) + Workflow Automation + Industry Connectors — driven by industry pack templates, not custom code.
 

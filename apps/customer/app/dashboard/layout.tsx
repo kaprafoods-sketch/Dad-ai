@@ -39,7 +39,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen">
       <aside className="w-56 shrink-0 border-r border-zinc-200 p-4">
-        <p className="mb-1 text-lg font-bold">Dad AI</p>
+        <p className="mb-1 text-lg font-bold">Nirmaanco</p>
         <p className="mb-6 text-xs text-zinc-500">{tenant?.name ?? 'Loading…'}</p>
         <nav className="flex flex-col gap-1">
           {navItems.map((item) => {

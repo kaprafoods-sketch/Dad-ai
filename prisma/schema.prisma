@@ -1,4 +1,4 @@
-// Dad AI — single shared schema, row-level multi-tenancy.
+// Nirmaanco — single shared schema, row-level multi-tenancy.
 // Every business table carries tenantId and MUST have an RLS policy
 // (tenant_id = auth.jwt() ->> 'tenant_id') added in migrations.
 
