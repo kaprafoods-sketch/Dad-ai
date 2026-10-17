@@ -4,37 +4,37 @@ Pre-launch verification for `apps/site`. Each item must be checked against the *
 
 ## 1. Build & quality
 
-- [ ] **PENDING VERIFICATION** — `pnpm --filter @dad-ai/site typecheck` passes (tsc --noEmit)
-- [ ] **PENDING VERIFICATION** — `pnpm --filter @dad-ai/site build` passes (next build)
-- [ ] **PENDING VERIFICATION** — repo-level `pnpm lint` (prettier --check) clean for new files
-- [ ] **PENDING VERIFICATION** — repo-level CI gates (typecheck, test) unaffected by the additive diff
-- [ ] No console errors on any route (manual pass — pending)
+- [x] **VERIFIED 2026-10-17** — `pnpm --filter @dad-ai/site typecheck` passes (tsc --noEmit; 2 real errors found and fixed during build)
+- [x] **VERIFIED 2026-10-17** — `pnpm --filter @dad-ai/site build` passes (next build, 18/18 static pages)
+- [x] **VERIFIED 2026-10-17** — repo-level `pnpm lint` (prettier --check) clean for new files
+- [x] **VERIFIED 2026-10-17** — customer/admin/notify typecheck green; full turbo build of api/worker not run (out of scope, untouched by this diff)
+- [ ] No console errors on any route (manual browser pass — pending)
 
 ## 2. Routes & links
 
-- [ ] **PENDING VERIFICATION** — all 13 content routes return 200: `/`, `/services`, `/services/digital-presence`, `/services/digital-growth`, `/services/ai-automation`, `/knowledge`, `/knowledge/document-ai-pipeline`, `/knowledge/ai-receptionist-webchat`, `/work`, `/about`, `/contact`, `/privacy`, `/terms`
-- [ ] **PENDING VERIFICATION** — `/robots.txt` and `/sitemap.xml` serve correctly
-- [ ] **PENDING VERIFICATION** — unknown paths render the custom 404 (noindexed)
-- [ ] **PENDING VERIFICATION** — no dead links, no dead CTAs, no placeholder buttons (code review says none exist — confirm in browser)
-- [ ] **PENDING VERIFICATION** — responsive at mobile, tablet, laptop, wide desktop; no horizontal overflow at common widths
+- [x] **VERIFIED 2026-10-17** — all 13 content routes return 200 at runtime (`next start` + curl): `/`, `/services`, `/services/digital-presence`, `/services/digital-growth`, `/services/ai-automation`, `/knowledge`, `/knowledge/document-ai-pipeline`, `/knowledge/ai-receptionist-webchat`, `/work`, `/about`, `/contact`, `/privacy`, `/terms`
+- [x] **VERIFIED 2026-10-17** — `/robots.txt` and `/sitemap.xml` serve correctly (sitemap lists all routes under planned `nirmaanco.in` canonical)
+- [x] **VERIFIED 2026-10-17** — unknown paths render the custom 404 (`/nonexistent-page-xyz` → 404)
+- [x] **VERIFIED 2026-10-17** — no dead links: 18 unique internal links across 5 pages all return 200. One broken link found and fixed: `/favicon.svg` 404'd because `app/favicon.svg` is not a Next.js metadata convention — moved to `public/favicon.svg`, re-verified 200.
+- [ ] Responsive at mobile, tablet, laptop, wide desktop; no horizontal overflow at common widths (needs browser viewport pass)
 
 ## 3. Forms & CTAs
 
-- [ ] **PENDING VERIFICATION** — Contact form: required-field validation, email regex, inline errors with `aria-invalid`/`role="alert"`, success state on 201/200, error state on API failure
-- [ ] **PENDING VERIFICATION** — Contact form with `NEXT_PUBLIC_API_URL` unset: honest "not configured" banner, submission blocked (no fake success)
-- [ ] **PENDING VERIFICATION** — Contact form POST body is exactly `{ type: 'lead', name, email }`; `x-tenant-id` only when `NEXT_PUBLIC_DEV_TENANT_ID` set
-- [ ] **PENDING VERIFICATION** — Tap-to-talk: idle → listening → sending → speaking transitions; en-IN / hi-IN language switch
-- [ ] **PENDING VERIFICATION** — Tap-to-talk degraded states: unsupported browser, mic denied, API unconfigured, API error — each shows the correct notice
-- [ ] **PENDING VERIFICATION** — Tap-to-talk copy does not claim phone calls (says "web demo … not a phone call")
-- [ ] **PENDING VERIFICATION** — primary CTA "Discuss a Project" → `/contact` works from every page (Hero default, CTABand, nav, footer)
+- [x] **CODE-VERIFIED 2026-10-17** — Contact form: all inputs have `<label>` elements, required-field validation + email checks in code; inline error states present. Runtime submission needs a live `NEXT_PUBLIC_API_URL` (not tested — no backend here).
+- [x] **CODE-VERIFIED 2026-10-17** — Contact form with `NEXT_PUBLIC_API_URL` unset: honest "not configured" banner in code, submission blocked (no fake success).
+- [x] **CODE-VERIFIED 2026-10-17** — Contact form POST body is exactly `{ type: 'lead', name, email }` per the API zod schema; `x-tenant-id` only when `NEXT_PUBLIC_DEV_TENANT_ID` set. Extra UI fields (business, website, interest, budget) are context-only, documented in code.
+- [x] **CODE-VERIFIED 2026-10-17** — Tap-to-talk: idle → listening → sending → speaking state machine; en-IN / hi-IN language switch; interim + final transcripts; reply spoken via speechSynthesis. Runtime mic test not possible in this environment.
+- [x] **CODE-VERIFIED 2026-10-17** — Tap-to-talk degraded states all handled with specific notices: unsupported browser, mic denied (`not-allowed`), API unconfigured, API error (includes hint about OPENROUTER_API_KEY / seeded agent).
+- [x] **CODE-VERIFIED 2026-10-17** — Tap-to-talk copy frames it as a "live demo … not a phone call"; no telephony or latency claims anywhere.
+- [ ] Primary CTA "Discuss a Project" → `/contact` works from every page (link targets verified in link sweep; click-path needs browser pass)
 
 ## 4. SEO
 
-- [x] Unique titles, descriptions, canonicals on all 13 routes (verified in code)
-- [x] `robots.ts` allows crawling and names the sitemap (verified in code)
-- [x] `sitemap.ts` lists all content routes with absolute URLs (verified in code)
-- [x] Organization + WebSite JSON-LD present, no fake reviews/ratings (verified in code)
-- [x] OG/Twitter defaults + `en_IN` locale, favicon (verified in code)
+- [x] Unique titles, descriptions, canonicals on all 13 routes (**runtime-verified 2026-10-17**: homepage serves `<title>Nirmaanco — Build Smarter. Grow Faster.</title>`, meta description, canonical `https://nirmaanco.in`, OG tags with `en_IN` locale)
+- [x] `robots.ts` allows crawling and names the sitemap (**runtime-verified 2026-10-17**: serves `User-Agent: * / Allow: /` + sitemap reference)
+- [x] `sitemap.ts` lists all content routes with absolute URLs (**runtime-verified 2026-10-17**: valid XML, all routes present)
+- [x] Organization + WebSite JSON-LD present, no fake reviews/ratings (**runtime-verified 2026-10-17**: both `@type` blocks in homepage HTML)
+- [x] OG/Twitter defaults + `en_IN` locale, favicon (**runtime-verified 2026-10-17**: `/favicon.svg` serves 200 after moving from `app/` to `public/`)
 - [ ] **PENDING** — Search Console verification (blocked: domain unconfirmed, site not deployed)
 - [ ] **PENDING** — analytics wired and baselines recorded (blocked: provider undecided)
 - [ ] **PENDING** — real OG images designed (text-only cards until then)
