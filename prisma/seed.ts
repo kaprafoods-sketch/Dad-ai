@@ -18,7 +18,7 @@ async function main() {
   let tenant = await prisma.tenant.findUnique({ where: { slug } });
   if (!tenant) {
     tenant = await prisma.tenant.create({
-      data: { name: 'Dad AI (Agency)', slug, industryPack: 'AGENCY', plan: 'BUSINESS' },
+      data: { name: 'Nirmaanco (Agency)', slug, industryPack: 'AGENCY', plan: 'BUSINESS' },
     });
     console.log(`Created tenant #0: ${tenant.id}`);
   } else {

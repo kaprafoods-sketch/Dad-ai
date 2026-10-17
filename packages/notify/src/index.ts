@@ -17,7 +17,7 @@ export interface NotifyRequest {
 
 export async function sendEmail(to: string, subject: string, body: string): Promise<string> {
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM ?? 'noreply@dad-ai.local';
+  const from = process.env.RESEND_FROM ?? 'noreply@nirmaanco.in'; // planned domain — confirm before production use
   if (!apiKey) throw new Error('RESEND_API_KEY is not set');
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',

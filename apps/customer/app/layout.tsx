@@ -4,8 +4,9 @@ import { QueryProvider } from '../lib/query-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Dad AI',
-  description: 'The AI Business Operating System for your company',
+  title: 'Nirmaanco',
+  description:
+    'Nirmaanco — Build Smarter. Grow Faster. The AI Business Operating System for your company',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
